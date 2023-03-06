@@ -26,6 +26,10 @@ def every_nth(input_list, step_size):
 #input parameters: input_list
 
 # %%
+def unique(input_list):
+    listIsunique = len(set(input_list)) == len(input_list)
+
+    return listIsunique
 
 
 # %%
@@ -35,7 +39,15 @@ def every_nth(input_list, step_size):
 #input parameters: input_list
 
 # %%
-
+def flatten(input_list):
+    flat_list = []
+    
+    for sublist in input_list:
+        if isinstance(sublist, list):
+            flat_list.extend(flatten(sublist))
+        else:
+            flat_list.append(sublist)
+    return flat_list
 
 # %%
 #Create a function that concatenates n lists
@@ -45,7 +57,11 @@ def every_nth(input_list, step_size):
 
 
 # %%
-
+def merge_lists(*args):
+    merged_list = []
+    for element in lists:
+        merged_list += element
+    return merged_list
 
 # %%
 #Create a function that can reverse a list of tuples
@@ -55,6 +71,8 @@ def every_nth(input_list, step_size):
 #input parameters: input_list
 
 # %%
+def reverse_tuples(input_list):
+    return [tuple(reversed(t)) for t in input_list]
 
 
 # %%
@@ -64,7 +82,8 @@ def every_nth(input_list, step_size):
 #input parameters: input_list
 
 # %%
-
+def remove_tuplicates(input_list):
+    return list(set(input_list))
 
 # %%
 #Create a function that transposes a nested list (matrix)
@@ -73,7 +92,8 @@ def every_nth(input_list, step_size):
 #input parameters: input_list
 
 # %%
-
+def transpose(input_list):
+    return [list(row) for row in zip(*input_list)]
 
 # %%
 #Create a function that can split a nested list into chunks
@@ -83,6 +103,8 @@ def every_nth(input_list, step_size):
 #input parameters: input_list,chunk_size
 
 # %%
+def split_into_chunks(linput_listst, chunk_size):
+    return [input_list[i:i+chunk_size] for i in range(0, len(input_list), chunk_size)]
 
 
 # %%
@@ -92,7 +114,11 @@ def every_nth(input_list, step_size):
 #input parameters: *dict
 
 # %%
-
+def merge_dicts(*dict):
+    result_dict = {}
+    for i in dict:
+        result_dict.update(i)
+    return result_dict
 
 # %%
 #Create a function that receives a list of integers and sort them by parity
@@ -102,7 +128,15 @@ def every_nth(input_list, step_size):
 #input parameters: input_list
 
 # %%
-
+def by_parity(input_list):
+    even = []
+    odd = []
+    for num in input_list:
+        if num % 2 == 0:
+            even.append(num)
+        else:
+            odd.append(num)
+    return {"even": sorted(even), "odd": sorted(odd)}
 
 # %%
 #Create a function that receives a dictionary like this: {"some_key":[1,2,3,4],"another_key":[1,2,3,4],....}
