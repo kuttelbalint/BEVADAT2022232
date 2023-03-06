@@ -6,7 +6,7 @@
 def contains_odd(input_list):
     containsOddNum = False
     for i in range(len(input_list)):
-        if i % 2 == 1:
+        if input_list[i] % 2 == 1:
             contains_odd = True
     
     return contains_odd
@@ -23,7 +23,7 @@ def is_odd(input_list):
 
     for i in range(len(input_list)):
         if i != 0:
-            if i % 2 == 1:
+            if input_list[i] % 2 == 1:
                 maskedList.append(True)
             else:
                 maskedList.append(False)
