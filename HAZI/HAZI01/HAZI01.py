@@ -59,7 +59,7 @@ def flatten(input_list):
 # %%
 def merge_lists(*args):
     merged_list = []
-    for element in lists:
+    for element in args:
         merged_list += element
     return merged_list
 
@@ -103,7 +103,7 @@ def transpose(input_list):
 #input parameters: input_list,chunk_size
 
 # %%
-def split_into_chunks(linput_listst, chunk_size):
+def split_into_chunks(input_list, chunk_size):
     return [input_list[i:i+chunk_size] for i in range(0, len(input_list), chunk_size)]
 
 
