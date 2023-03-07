@@ -35,6 +35,7 @@ def create_array(size=(2,2)):
 # %%
 def set_one(arr):
     np.fill_diagonal(arr, 1)
+    return arr
 
 # %%
 # Készíts egy függvényt ami transzponálja a paraméterül kapott mártix-ot:
@@ -43,7 +44,7 @@ def set_one(arr):
 # do_transpose()
 
 # %%
-def do_transponse(matrix):
+def do_transpose(matrix):
     return np.transpose(matrix)
 
 # %%
@@ -53,7 +54,7 @@ def do_transponse(matrix):
 # round_array()
 
 # %%
-def round_array(arr, decimal_places):
+def round_array(arr, decimal_places = 2):
     rounded_arr = np.round(arr, decimal_places)
     return rounded_arr
 
@@ -65,7 +66,7 @@ def round_array(arr, decimal_places):
 
 # %%
 def bool_array(arr):
-    return np.logical_not(arr).astype(int)
+    return arr.astype(bool)
 
 # %%
 # Készíts egy olyan függvényt, ami a bementként kapott 0 és 1 ből álló tömben a 1 - False-ra az 0 True-ra cserélni
