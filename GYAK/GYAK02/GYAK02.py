@@ -17,10 +17,11 @@ import numpy as np
 #create_array()
 
 # %%
-def create_array(size):
-    return np.array([0,0], ndmin=size)
+def create_array(size=(2,2)):
+    arr = np.empty(size, dtype=int)
+    arr.fill(0)
+    return arr
 
-print(create_array())
 
 # %%
 
@@ -52,7 +53,9 @@ def do_transponse(matrix):
 # round_array()
 
 # %%
-
+def round_array(arr, decimal_places):
+    rounded_arr = np.round(arr, decimal_places)
+    return rounded_arr
 
 # %%
 # Készíts egy olyan függvényt, ami a bementként kapott 0 és 1 ből álló tömben a 0 - False-ra, az 1 True-ra cserélni
