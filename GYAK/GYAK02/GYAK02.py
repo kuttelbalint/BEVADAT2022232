@@ -74,12 +74,16 @@ def bool_array(arr):
 # invert_bool_array()
 
 # %%
-
+def invert_bool_array(arr):
+    bool_arr = np.array(arr, dtype=bool)
+    inv_bool_arr = np.invert(bool_arr)
+    return inv_bool_arr
 # %%
 # Készíts egy olyan függvényt ami a paraméterként kapott array-t kilapítja
 # Be: [[1,2], [3,4]]
 # Ki: [1,2,3,4]
 # flatten()
+
 
 
 # %%
