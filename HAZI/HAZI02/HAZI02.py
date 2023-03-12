@@ -1,6 +1,7 @@
 # %%
 import numpy as np
 import datetime
+from datetime import datetime, timedelta
 
 # %%
 #FONTOS!!!
@@ -21,6 +22,8 @@ def column_swap(arr):
     return arr
 
 arr = np.array([[1,2], [3,4]])
+
+
 # %%
 # Készíts egy olyan függvényt ami összehasonlít két array-t és adjon vissza egy array-ben, hogy hol egyenlőek 
 # Pl Be: [7,8,9], [9,8,7] 
@@ -39,13 +42,13 @@ def compare_two_array(arr1, arr2):
 # get_array_shape()
 # 3D-vel még műküdnie kell!, 
 
+arr = np.array([[1,2,3], [4,5,6]])
 def get_array_shape(arr):
     shape = arr.shape
     rank = arr.ndim
     depth = 1
     if rank == 3:
         depth = shape[2]
-
     return "sor: " + str(shape[0]) + ", oszlop: " + str(shape[1]) + ", melyseg: " + str(depth)
 
 # %%
@@ -68,8 +71,6 @@ def encode_Y(input_array, num_rows):
 # Ki:  [1, 2, 0, 3]
 # decode_Y()
 
-
-
 def decode_Y(output_array):
     num_rows, num_cols = output_array.shape
     row_indices = np.arange(num_rows)
@@ -86,6 +87,7 @@ def decode_Y(output_array):
 def eval_classification(list_, arr):
     max_probability = np.argmax(arr)
     return list_[max_probability]
+
 
 # %%
 # Készíts egy olyan függvényt, ahol az 1D array-ben a páratlan számokat -1-re cseréli
@@ -139,6 +141,7 @@ def add_border(arr):
     output[1:-1, 1:-1] = arr
     return output
 
+
 # %%
 # A KÖTVETKEZŐ FELADATOKHOZ NÉZZÉTEK MEG A NUMPY DATA TYPE-JÁT!
 
@@ -148,21 +151,19 @@ def add_border(arr):
 # Ki: ['2023-03-01', '2023-03-02', .. , '2023-03-31',]
 # list_days()
 
-from datetime import datetime, timedelta
-
-def days_between(start_date, end_date):
+def list_days(start_date, end_date):
     start = datetime.strptime(start_date, '%Y-%m')
     end = datetime.strptime(end_date, '%Y-%m')
     num_days = (end - start).days + 1
     date_array = np.arange(num_days, dtype='timedelta64[D]') + np.datetime64(start)
     return np.datetime_as_string(date_array, unit='D')
 
-
 # %%
 # Írj egy fügvényt ami vissza adja az aktuális dátumot az alábbi formában: YYYY-MM-DD. Térjen vissza egy 'numpy.datetime64' típussal.
 # Be:
 # Ki: 2017-03-24
 # get_act_date()
+
 
 def get_act_date():
     current_date = np.datetime64('today')
@@ -173,12 +174,9 @@ def get_act_date():
 # Be: 
 # Ki: másodpercben az idó, int-é kasztolva
 # sec_from_1970()
-
+import datetime
 def sec_from_1970():
     converted_time = datetime.datetime(1970, 1, 1, 0, 2, 0)
     current_time = datetime.datetime.now()
     seconds_passed = (current_time - converted_time).total_seconds()
     return int(seconds_passed)
-
-
-
