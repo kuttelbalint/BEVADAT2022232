@@ -21,9 +21,6 @@ def column_swap(arr):
     return arr
 
 arr = np.array([[1,2], [3,4]])
-
-print(column_swap(arr))
-
 # %%
 # Készíts egy olyan függvényt ami összehasonlít két array-t és adjon vissza egy array-ben, hogy hol egyenlőek 
 # Pl Be: [7,8,9], [9,8,7] 
@@ -151,8 +148,14 @@ def add_border(arr):
 # Ki: ['2023-03-01', '2023-03-02', .. , '2023-03-31',]
 # list_days()
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
+def days_between(start_date, end_date):
+    start = datetime.strptime(start_date, '%Y-%m')
+    end = datetime.strptime(end_date, '%Y-%m')
+    num_days = (end - start).days + 1
+    date_array = np.arange(num_days, dtype='timedelta64[D]') + np.datetime64(start)
+    return np.datetime_as_string(date_array, unit='D')
 
 
 # %%
