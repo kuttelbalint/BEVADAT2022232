@@ -22,6 +22,9 @@ def column_swap(arr):
     return arr
 
 arr = np.array([[1,2], [3,4]])
+print("1. feladat:")
+print(column_swap(arr))
+print("----------------")
 
 
 # %%
@@ -35,6 +38,12 @@ def compare_two_array(arr1, arr2):
     equal_indices = np.where(arr1 == arr2)[0]
     return equal_indices
 
+arr1 = np.array([7,8,9])
+arr2 = np.array([9,8,7])
+print("2. feladat:")
+print(compare_two_array(arr1, arr2))
+print("----------------")
+
 # %%
 # Készíts egy olyan függvényt, ami vissza adja string-ként a megadott array dimenzióit:
 # Be: [[1,2,3], [4,5,6]]
@@ -42,7 +51,7 @@ def compare_two_array(arr1, arr2):
 # get_array_shape()
 # 3D-vel még műküdnie kell!, 
 
-arr = np.array([[1,2,3], [4,5,6]])
+arr3 = np.array([[1,2,3], [4,5,6]])
 def get_array_shape(arr):
     shape = arr.shape
     rank = arr.ndim
@@ -50,6 +59,11 @@ def get_array_shape(arr):
     if rank == 3:
         depth = shape[2]
     return "sor: " + str(shape[0]) + ", oszlop: " + str(shape[1]) + ", melyseg: " + str(depth)
+
+print("3. feladat:")
+print(get_array_shape(arr3))
+print("----------------")
+
 
 # %%
 # Készíts egy olyan függvényt, aminek segítségével elő tudod állítani egy neurális hálózat tanításához szükséges pred-et egy numpy array-ből. 
@@ -65,6 +79,12 @@ def encode_Y(input_array, num_rows):
     output_array[row_indices, input_array] = 1
     return output_array
 
+arr4 = np.array([1,2,0,3])
+print("4. feladat:")
+print(encode_Y(arr4, 4))
+print("----------------")
+
+
 # %%
 # A fenti feladatnak valósítsd meg a kiértékelését. Adj meg a 2d array-t és adj vissza a decodolt változatát
 # Be:  [[0,1,0,0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]]
@@ -77,6 +97,11 @@ def decode_Y(output_array):
     col_indices = np.argmax(output_array, axis=1)
     decoded_array = col_indices[row_indices]
     return np.array(decoded_array)
+
+arr5 = np.array([[0,1,0,0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]])
+print("5. feladat:")
+print(decode_Y(arr5))
+print("----------------")
 
 # %%
 # Készíts egy olyan függvényt, ami képes kiértékelni egy neurális háló eredményét! Bemenetként egy listát és egy array-t és adja vissza azt az elemet, aminek a legnagyobb a valószínüsége(értéke) a listából.
@@ -154,9 +179,13 @@ def add_border(arr):
 def list_days(start_date, end_date):
     start = datetime.strptime(start_date, '%Y-%m')
     end = datetime.strptime(end_date, '%Y-%m')
-    num_days = (end - start).days + 1
+    num_days = (end - start).days
     date_array = np.arange(num_days, dtype='timedelta64[D]') + np.datetime64(start)
     return np.datetime_as_string(date_array, unit='D')
+
+print("12. feladat")
+print(list_days('2023-03', '2023-04'))
+print("----------------")
 
 # %%
 # Írj egy fügvényt ami vissza adja az aktuális dátumot az alábbi formában: YYYY-MM-DD. Térjen vissza egy 'numpy.datetime64' típussal.
@@ -180,3 +209,6 @@ def sec_from_1970():
     current_time = datetime.datetime.now()
     seconds_passed = (current_time - converted_time).total_seconds()
     return int(seconds_passed)
+
+print("14. feladat")
+print(sec_from_1970())
