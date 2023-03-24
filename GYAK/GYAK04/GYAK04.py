@@ -97,7 +97,7 @@ def plot_population(test_df):
     new_df = test_df.copy()
     countries = new_df.country.tolist()
     population = new_df.population.tolist()
-    fig = plt.figure(figsize = (10, 5))
+    fig = plt.figure()
     plt.bar(countries, population)
     plt.xlabel('Country')
     plt.ylabel('Population (millions)')
@@ -123,8 +123,9 @@ def plot_area(test_df):
     new_df = test_df.copy()
     countries = new_df.country.tolist()
     area = new_df.area.tolist()
-
+    
     fig, ax = plt.subplots()
+    ax.set_title("Area of Countries")
     ax.pie(area, labels=countries)
     return fig
 
