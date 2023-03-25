@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+import random
+
 # %%
 '''
 FONTOS: Az első feladatáltal visszaadott DataFrame-et kell használni a további feladatokhoz. 
@@ -102,6 +104,14 @@ függvény neve: average_scores
 '''
 
 # %%
+def average_scores(df_data):
+    new_df = df_data.copy()
+    agg_df = new_df.groupby("parental level of education").agg(
+            {"math score": "mean", "reading score": "mean", "writing score": "mean"}
+        )
+    
+    return agg_df
+    
 
 
 # %%
@@ -116,7 +126,12 @@ függvény neve: add_age
 '''
 
 # %%
+def add_age_column(df_data):
+    new_df = df_data.copy()
+    random.seed(42)
+    new_df["age"] = [random.randint(18, 66) for _ in range(len(new_df))]
 
+    return new_df
 
 # %%
 '''
@@ -129,6 +144,14 @@ függvény neve: female_top_score
 '''
 
 # %%
+def female_top_score(df_data):
+    new_df = df_data.copy()
+    female_students = new_df[new_df['gender'] == 'female']
+    successful_female_students = female_students.nlargest(1, ['math score', 'reading score', 'writing score'])
+    successful_female_student_scores = tuple(successful_female_students.iloc[0][['math score', 'reading score', 'writing score']])
+    return successful_female_student_scores
+
+
 
 
 # %%
@@ -149,7 +172,12 @@ függvény neve: add_grade
 '''
 
 # %%
-
+def add_grade(df_data):
+    new_df = df_data.copy()
+    new_df['percentage'] = (new_df['math score'] + new_df['reading score'] + new_df['writing score']) / 300 * 100
+    new_df['grade'] = pd.cut(new_df['percentage'], bins=[0, 60, 70, 80, 90, 100], labels=['F', 'D', 'C', 'B', 'A'])
+    new_df.drop('percentage', axis=1, inplace=True)
+    return new_df
 
 # %%
 '''
