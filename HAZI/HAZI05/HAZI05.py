@@ -19,35 +19,34 @@ class KNNClassifier:
         self.y_test = None
 
     @staticmethod
-    def load_csv(csv_path:str) ->Tuple[np.ndarray,np.ndarray]:
-        np.random.seed(42)
-        dataset = np.genfromtxt(csv_path,delimiter=',')
-        np.random.shuffle(dataset,)
-        x,y = dataset[:,:4],dataset[:,-1]
-        return x,y
+    def load_csv(csv_path: str):
+        df = pd.read_csv(csv_path, header=None)
+        df = df.sample(frac=1, random_state=42)
+        X, y = df.iloc[:, :-1].values, df.iloc[:, -1].values
+        return X, y
     
-    def train_test_split(self, features:np.ndarray, labels:np.ndarray) -> None:
+    def train_test_split(self, features:pd.DataFrame, labels:pd.Series) -> None:
         test_size = int(len(features) * self.test_split_ratio)
         train_size = len(features) - test_size
         assert len(features) == test_size + train_size, "Size mismatch!"
 
-        self.X_train, self.y_train = features[:train_size,:], labels[:train_size]
-        self.X_test, self.y_test = features[train_size:train_size+test_size,:], labels[train_size:train_size + test_size]
+        self.X_train, self.y_train = features.iloc[:train_size,:], labels.iloc[:train_size]
+        self.X_test, self.y_test = features.iloc[train_size:train_size+test_size,:], labels.iloc[train_size:train_size + test_size]
     
-    def euclidean(self, element_of_x: np.ndarray) -> np.ndarray:
-        return np.sqrt(np.sum((self.x_train - element_of_x)**2, axis=1))
+    def euclidean(self, element_of_x: pd.Series) -> pd.Series:
+        return ((self.X_train - element_of_x)**2).sum(axis=1).apply(lambda x: x**0.5)
 
     
-    def predict(self, x_test: np.ndarray) -> np.ndarray:
+    def predict(self, x_test: pd.DataFrame) -> pd.Series:
         labels_pred = []
 
-        for x_test_element in x_test:
+        for index, x_test_element in x_test.iterrows():
             distances = self.euclidean(x_test_element)
-            distances = np.array(sorted(zip(distances, self.y_train)))
-            label_pred = mode(distances[:self.k, 1], keepdims=False).mode
+            distances = pd.concat([distances, self.y_train], axis=1).sort_values(by=0)
+            label_pred = mode(distances.iloc[:self.k, 1])[0][0]
             labels_pred.append(label_pred)
 
-        self.y_preds = np.array(labels_pred, dtype=np.int32)
+        self.y_preds = pd.Series(labels_pred, dtype=int)
 
         return self.y_preds
 
@@ -56,5 +55,6 @@ class KNNClassifier:
         true_positive = (self.y_test == self.y_preds).sum()
         return true_positive / len(self.y_test) * 100
 
-    def confusion_matrix(self) -> np.ndarray:
-        return confusion_matrix(self.y_test, self.y_preds)
+    def plot_confusion_matrix(self) -> pd.DataFrame:
+        conf_matrix = pd.crosstab(index=self.y_test, columns=self.y_preds, rownames=['True'], colnames=['Predicted'])
+        return conf_matrix.values
