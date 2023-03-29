@@ -26,9 +26,6 @@ def csv_to_df(location):
     df_data = pd.read_csv(location)
     return df_data
 
-test_df = csv_to_df("StudentsPerformance.csv")
-print(test_df)
-
 # %%
 '''
 Készíts egy függvényt, ami egy DataFrame-et vár paraméterként, 
@@ -69,8 +66,6 @@ def math_passed_count(df_data):
 
     count = len(new_df[new_df["math score"] > 50])
     return count
-
-print(math_passed_count(test_df))
 
 # %%
 '''
@@ -195,7 +190,17 @@ függvény neve: math_bar_plot
 '''
 
 # %%
+def math_bar_plot(df_data):
+    new_df = df_data.copy()
+    avg_math_by_gender = new_df.groupby('gender')['math score'].mean()
+    fig, ax = plt.subplots()
+    ax.bar(avg_math_by_gender.index, avg_math_by_gender.values)
 
+    ax.set_title('Average Math Score by Gender')
+    ax.set_xlabel('Gender')
+    ax.set_ylabel('Math Score')
+    
+    return fig
 
 # %%
 ''' 
@@ -213,6 +218,15 @@ függvény neve: writing_hist
 '''
 
 # %%
+def writing_hist(df_data):
+    new_df = df_data.copy()
+    fig, ax = plt.subplots()
+    ax.hist(new_df['writing score'])
+    ax.set_xlabel('Writing Score')
+    ax.set_ylabel('Number of Students')
+    ax.set_title('Distribution of Writing Scores')
+    
+    return fig
 
 
 # %%
@@ -238,5 +252,3 @@ def plot_race_ethnicity_distribution(df_data):
     ax.set_title("Proportion of Students by Race/Ethnicity")
 
     return fig
-
-
