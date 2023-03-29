@@ -5,7 +5,7 @@ from scipy.stats import mode
 from sklearn.metrics import confusion_matrix, euclidean_distances
 
 class KNNClassifier:
-    
+
     @property
     def k_neighbors(self) -> int:
         return self.k
@@ -18,6 +18,7 @@ class KNNClassifier:
         self.X_test = None
         self.y_test = None
 
+    @staticmethod
     def load_csv(csv_path:str) ->Tuple[np.ndarray,np.ndarray]:
         np.random.seed(42)
         dataset = np.genfromtxt(csv_path,delimiter=',')
