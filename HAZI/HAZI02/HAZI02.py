@@ -26,7 +26,8 @@ print("1. feladat:")
 print(column_swap(arr))
 print("----------------")
 '''
-
+arr1 = np.array([[1,2], [3,4]])
+print(column_swap(arr1))
 
 
 # %%
