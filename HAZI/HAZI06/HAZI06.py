@@ -27,12 +27,33 @@ class NJCleaner:
         return self.data
     
     def convert_scheduled_time_to_part_of_the_day(self):
-        data = self.data.copy()
-        
-        data['part_of_the_day'] = pd.cut(pd.to_datetime(data['scheduled_time']).dt.hour,
-                                         bins=[0, 4, 8, 12, 16, 20, 24],
-                                         labels=['late_night', 'early_morning', 'morning',
-                                                 'afternoon', 'evening', 'night'],
-                                         include_lowest=True)
-        data = data.drop('scheduled_time', axis=1)
-        return data
+        def part_of_the_day(hour):
+            if 4 <= hour < 8:
+                return 'early_morning'
+            elif 8 <= hour < 12:
+                return 'morning'
+            elif 12 <= hour < 16:
+                return 'afternoon'
+            elif 16 <= hour < 20:
+                return 'evening'
+            elif 20 <= hour <= 23:
+                return 'night'
+            else:
+                return 'late_night'
+        self.data['part_of_the_day'] = pd.to_datetime(self.data['scheduled_time']).dt.hour.apply(part_of_the_day)
+        self.data.drop('scheduled_time', axis=1, inplace=True)
+
+        return self.data
+    
+    def convert_delay(self):
+        self.data['delay'] = (self.data['real_time'] - self.data['scheduled_arrival']).apply(lambda x: 1 if x >= pd.Timedelta(minutes=5) else 0)
+        return self.data
+    
+    def drop_unnecessary_columns(self):
+        df = self.data.copy()
+        df = df.drop(['train_id', 'actual_time', 'delay_minutes'], axis=1)
+
+        return df
+    
+    def save_first_60k(self, path):
+     self.data.iloc[:60000].to_csv(path, index=False)
