@@ -1,5 +1,5 @@
 import numpy as np
-from HAZI.HAZI06.NJCleaner import NJCleaner
+from NJCleaner import NJCleaner
 
 from src.Node import Node
 
@@ -122,7 +122,6 @@ class DecisionTreeClassifier():
             return self.make_prediction(x, tree.right)
         
 
-cleaner = NJCleaner()
-data = cleaner.prep_df("data/NJ.csv")
+cleaner = NJCleaner("data/NJ.csv")
+data = cleaner.prep_df(cleaner.data)
 
-print(data)
