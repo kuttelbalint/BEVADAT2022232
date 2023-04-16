@@ -207,8 +207,7 @@ class NJCleaner:
      self.data.iloc[:60000].to_csv(path, index=False)
 
 
-cleaner = NJCleaner("HAZI/HAZI06/NJ.csv")
-data = cleaner.prep_df(cleaner.data)
+data = pd.read_csv('HAZI/HAZI06/NJ_60k.csv')
 
 X = data.iloc[:, :-1].values
 Y = data.iloc[:, -1].values.reshape(-1,1)
