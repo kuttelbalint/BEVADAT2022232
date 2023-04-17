@@ -50,9 +50,22 @@ class NJCleaner:
 
         return self.data
     
+    def convert_delay_calculator(self, delay):
+        if delay < 5:
+            return 0
+        else:
+            return 1
+        
     def convert_delay(self):
-        self.data['delay'] = (self.data['actual_time'] - self.data['scheduled_time']).apply(lambda x: 1 if x >= pd.Timedelta(minutes=5) else 0)
+        df = self.data.copy()
+        df['delay'] = df['delay_minutes'].apply(self.convert_delay_calculator)
         return self.data
+    
+    """
+    def convert_delay(self):
+        self.data['delay'] = self.data['delay_minutes'].apply(lambda x: 1 if x >= pd.Timedelta(minutes=5) else 0)
+        return self.data
+    """
     
     def drop_unnecessary_columns(self):
         df = self.data.copy()
