@@ -1,8 +1,10 @@
 from sklearn.datasets import load_digits
 from sklearn.cluster import KMeans
 from sklearn.metrics import accuracy_score, confusion_matrix
+from statistics import mode
 import numpy as np
 import seaborn as sns
+import statistics
 
 
 class KMeansOnDigits:
@@ -27,7 +29,7 @@ class KMeansOnDigits:
         self.labels = np.zeros_like(self.clusters)
         for i in range(self.n_clusters):
             mask = (self.clusters == i)
-            self.labels[mask] = mode(self.digits.target[mask])[0]
+            self.labels[mask] = statistics.mode(self.digits.target[mask])[0]
 
     def calc_accuracy(self):
         self.accuracy = round(accuracy_score(self.digits.target, self.labels), 2)
