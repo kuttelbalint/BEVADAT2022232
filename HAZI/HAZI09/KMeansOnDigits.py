@@ -22,20 +22,20 @@ class KMeansOnDigits:
         self.digits = load_digits()
 
     def predict(self):
-        self.model = KMeans(n_clusters=self.n_clusters, random_state=self.random_state)
-        self.clusters = self.model.fit_predict(self.digits.data)
+        self.clusters = KMeans(n_clusters=self.n_clusters, random_state=self.random_state).fit_predict(self.digits.data)
+        return self.clusters
 
     def get_labels(self):
         self.labels = np.zeros_like(self.clusters)
-        for i in range(self.n_clusters):
+        for i in range(10):
             mask = (self.clusters == i)
-            self.labels[mask] = statistics.mode(self.digits.target[mask])[0]
+            self.labels[mask] = mode(self.digits.target[mask])[0]
+        return self.labels
 
-    def calc_accuracy(self):
-        self.accuracy = round(accuracy_score(self.digits.target, self.labels), 2)
+    def calc_accuracy(self, target_labels:np.ndarray,predicted_labels:np.ndarray):
+        self.accuracy = accuracy_score(target_labels, predicted_labels)
+        return round(self.accuracy, 2)
 
     def confusion_matrix(self):
         self.mat = confusion_matrix(self.digits.target, self.labels)
-        sns.heatmap(self.mat.T, square=True, annot=True, fmt='d', cbar=False,
-                    xticklabels=self.digits.target_names,
-                    yticklabels=self.digits.target_names)
+        return self.mat
