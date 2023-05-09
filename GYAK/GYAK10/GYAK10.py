@@ -1,10 +1,6 @@
 # %%
 import numpy as np
 
-# %%
-from msilib.schema import SelfReg
-from typing import Self
-
 
 class Dense:
     """A fully-connected NN layer.
@@ -56,8 +52,6 @@ class ReLU():
         self.layer_input = x
         return np.maximum(0, x)
 
-# %%
-activation = ReLU()
-print(activation.forward_pass(output))
+
 
 
