@@ -24,8 +24,6 @@ def cifar100_data():
 
 
 
-
-
 # %%
 '''
 Készíts egy konvolúciós neurális hálót, ami képes felismerni a képen mi van a 100 osztály közül.
@@ -98,5 +96,8 @@ return type: float, float
 függvény neve: model_evaluate
 '''
 
+def model_evaluate(model, test_images, test_labels):
+    test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=0)
+    return test_loss, test_acc
 
 
